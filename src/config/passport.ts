@@ -2,27 +2,54 @@ import passport from 'passport'
 import { Strategy as JWTStrategy, ExtractJwt as ExtractJWT } from 'passport-jwt'
 import { Strategy as LocalStrategy } from 'passport-local'
 
+import { User } from 'models'
 import env from 'config/env'
+import { checkPassword } from 'utils/user'
+
 
 const strategies = () => {
-    // Local Strategy
     passport.use(new LocalStrategy({
         usernameField: 'username',
         passwordField: 'password'
-    }, (username, password, done) => {
-        // find user
-        // check password
-        // return done with the found user
-    }))
+    },
+        async (username, password, done) => {
+            // find user
+            let user = await User.findOne({ 'username': username })
+            if (!user) {
+                return done(null, false)
+            }
 
-    //JWT Strategy
+            const isPasswordCorrect = checkPassword(password, user.password)
+            if (!isPasswordCorrect) {
+                return done(null, false)
+            }
+
+            const responseUser = {
+                "username": user.username,
+                "metadata": user.metadata
+            }
+
+            return done(null, responseUser)
+        }))
+
+
     passport.use(new JWTStrategy({
         jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
         secretOrKey: env.JWT_SECRET
-    }, (jwtPayload, done) => {
-        // find user
-        // return done with the found user
-    }));
+    },
+        async (jwtPayload, done) => {
+            let user = await User.findOne({ 'username': jwtPayload.username })
+            if (!user) {
+                return done(null, false)
+            }
+
+            const responseUser = {
+                "username": user.username,
+                "metadata": user.metadata
+            }
+
+            return done(null, responseUser)
+        }));
 }
 
 export default strategies
