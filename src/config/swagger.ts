@@ -1,6 +1,6 @@
 const swaggerDefinition = {
     info: {
-        title: 'TS-EXPRESS-MONGOOSE-BOILERPLATE',
+        title: 'TS-EXPRESS-MONGOOSE-USER-BOILERPLATE',
         version: '1.0.0',
         description: 'Backend REST API server',
         contact: {

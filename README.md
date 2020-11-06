@@ -1,4 +1,4 @@
-# TS-EXPRESS-MONGOOSE-BOILERPLATE
+# TS-EXPRESS-MONGOOSE-USER-BOILERPLATE
 
 ## Technology Stacks
 - Node.js
@@ -13,5 +13,8 @@
         - Mongoose
 - Authentication
     - OAuth2
+
+
+With pre-built user feature
 
 I made it for my convinience.
