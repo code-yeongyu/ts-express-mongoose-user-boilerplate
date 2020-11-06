@@ -25,8 +25,7 @@ const strategies = () => {
             }
 
             const responseUser = {
-                "username": user.username,
-                "metadata": user.metadata
+                "username": user.username
             }
 
             return done(null, responseUser)
@@ -44,8 +43,7 @@ const strategies = () => {
             }
 
             const responseUser = {
-                "username": user.username,
-                "metadata": user.metadata
+                "username": user.username
             }
 
             return done(null, responseUser)
